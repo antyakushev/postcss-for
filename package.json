@@ -1,0 +1,36 @@
+{
+  "name": "postcss-for",
+  "version": "0.0.0",
+  "description": "PostCSS plugin that enables SASS-like f@for loop syntax in your CSS",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcssplugin",
+    "for",
+    "loop",
+    "sass",
+    "from",
+    "to",
+    "through",
+    "iterate"
+  ],
+  "author": "Anton Yakushev <yakushevanton@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antyakushev/postcss-for.git"
+  },
+  "dependencies": {
+    "postcss": "^4.1.0",
+    "postcss-simple-vars": "^0.2.4"
+  },
+  "devDependencies": {
+    "gulp-eslint": "0.8.0",
+    "gulp-mocha": "2.0.1",
+    "chai": "2.2.0",
+    "gulp": "3.8.11"
+  },
+  "scripts": {
+    "test": "gulp"
+  }
+}
