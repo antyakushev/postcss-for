@@ -10,13 +10,13 @@ var test = function (input, output, opts) {
 describe('postcss-for', function () {
 
     it('it iterates from and to', function () {
-        test('@for $i from 1 to 3 { b-$i { width: $i px; } }',
+        test('@for $i from 1 to 3 { .b-$i { width: $i px; } }',
              '.b-1 {\n    width: 1 px\n}\n.b-2 {\n    width: 2 px\n}');
     });
 
     it('it iterates from and through', function () {
-        test('@for $i from 1 through 3 { b{ width: $i px; } }',
-             'b {\n    width: 1 px\n}\nb {\n    width: 2 px\n}\nb {\n    width: 3 px\n}');
+        test('@for $i from 1 through 3 { .b-$i { width: $i px; } }',
+             '.b-1 {\n    width: 1 px\n}\n.b-2 {\n    width: 2 px\n}\n.b-3 {\n    width: 3 px\n}');
     });
 
 });
