@@ -19,4 +19,22 @@ describe('postcss-for', function () {
              '.b-1 {\n    width: 1 px\n}\n.b-2 {\n    width: 2 px\n}\n.b-3 {\n    width: 3 px\n}');
     });
 
+    it('it throws an error on wrong syntax', function () {
+        expect(function () {
+            test('@for $i since 1 until 3 { .b-$i { width: $i px; } }');
+        }).to.throw('<css input>:1:1: Wrong loop syntax');
+    });
+
+    it('it throws an error on wrong range parameters', function () {
+        expect(function () {
+            test('@for $i from a to c { .b-$i { width: $i px; } }');
+        }).to.throw('<css input>:1:1: Range parameter should be a number');
+    });
+
+    it('it throws an error if range parameter is a variable', function () {
+        expect(function () {
+            test('@for $i from 1 to $columns { .b-$i { width: $i px; } }');
+        }).to.throw('<css input>:1:1: Variable cannot be used as a range parameter');
+    });
+
 });
