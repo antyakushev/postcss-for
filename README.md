@@ -19,8 +19,8 @@
 
 ## Usage
 
-Note, that you must set this plugin before [postcss-simple-vars]
-and [postcss-nested].
+Note, that you must set this plugin before [postcss-nested]
+and [postcss-simple-vars]. Therefore dollar variable cannot be used as a loop parameter.
 
 ```js
 postcss([ require('postcss-for') ])
