@@ -9,6 +9,7 @@
 postcss([ require('postcss-for') ])
 ```
 
+Note, that unlike the Sass `@for`, postcss-for in the example below iterates from 1 to 3 *inclusively*.
 ```css
 @for $i from 1 to 3 {
     .b-$i { width: $i px; }
@@ -27,7 +28,6 @@ postcss([ require('postcss-for') ])
 }
 ```
 
-Note, that unlike the Sass `@for`, postcss-for in the example above iterates from 1 to 3 inclusively.
 This plugin must be set before [postcss-nested] and [postcss-simple-vars]. 
 Therefore dollar variable cannot be used as a loop range parameter.
 
