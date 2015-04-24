@@ -1,7 +1,13 @@
 # PostCSS For Plugin
 [![Build Status](https://travis-ci.org/antyakushev/postcss-for.svg)][ci] [![NPM version](https://badge.fury.io/js/postcss-for.svg)][npm] [![Dependency Status](https://gemnasium.com/antyakushev/postcss-default-unit.svg)][deps]
 
-[PostCSS] plugin that enables SASS-like `@for` loop syntax in your CSS.
+[PostCSS] plugin that enables `@for` loop syntax in your CSS.
+
+## Usage
+
+```js
+postcss([ require('postcss-for') ])
+```
 
 ```css
 @for $i from 1 to 3 {
@@ -16,16 +22,36 @@
 .b-2 {
     width: 2 px
 }
+.b-3 {
+    width: 3 px
+}
 ```
 
-## Usage
+Note, that unlike the Sass `@for`, postcss-for in the example above iterates from 1 to 3 inclusively.
+This plugin must be set before [postcss-nested] and [postcss-simple-vars]. 
+Therefore dollar variable cannot be used as a loop range parameter.
 
-Note, that you must set this plugin before [postcss-nested]
-and [postcss-simple-vars]. Therefore dollar variable cannot be used as a loop range parameter.
+`By` keyword is available:
 
-```js
-postcss([ require('postcss-for') ])
+```css
+@for $i from 1 to 5 by 2 {
+    .b-$i { width: $i px; }
+}
 ```
+
+```css
+.b-1 {
+    width: 1 px
+}
+.b-3 {
+    width: 3 px
+}
+.b-5 {
+    width: 5 px
+}
+```
+
+
 
 See [PostCSS] docs for examples for your environment.
 

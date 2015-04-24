@@ -10,23 +10,18 @@ var test = function (input, output, opts) {
 describe('postcss-for', function () {
 
     it('it iterates from and to', function () {
-        test('@for $i from 1 to 3 { .b-$i { width: $i px; } }',
+        test('@for $i from 1 to 2 { .b-$i { width: $i px; } }',
              '.b-1 {\n    width: 1 px\n}\n.b-2 {\n    width: 2 px\n}');
     });
 
     it('it iterates from bigger to smaller', function () {
         test('@for $i from 3 to 1 { .b-$i { width: $i px; } }',
-             '.b-3 {\n    width: 3 px\n}\n.b-2 {\n    width: 2 px\n}');
+             '.b-3 {\n    width: 3 px\n}\n.b-2 {\n    width: 2 px\n}\n.b-1 {\n    width: 1 px\n}');
     });
 
     it('it iterates from and to by two', function () {
-        test('@for $i from 1 to 5 by 2 { .b-$i { width: $i px; } }',
+        test('@for $i from 1 to 4 by 2 { .b-$i { width: $i px; } }',
              '.b-1 {\n    width: 1 px\n}\n.b-3 {\n    width: 3 px\n}');
-    });
-
-    it('it iterates from and through', function () {
-        test('@for $i from 1 through 3 { .b-$i { width: $i px; } }',
-             '.b-1 {\n    width: 1 px\n}\n.b-2 {\n    width: 2 px\n}\n.b-3 {\n    width: 3 px\n}');
     });
 
     it('it throws an error on wrong syntax', function () {
