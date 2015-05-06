@@ -12,19 +12,19 @@ postcss([ require('postcss-for') ])
 Note, that unlike the Sass `@for`, postcss-for in the example below iterates from 1 to 3 *inclusively*.
 ```css
 @for $i from 1 to 3 {
-    .b-$i { width: $i px; }
+    .b-$i { width: $(i)px; }
 }
 ```
 
 ```css
 .b-1 {
-    width: 1 px
+    width: 1px
 }
 .b-2 {
-    width: 2 px
+    width: 2px
 }
 .b-3 {
-    width: 3 px
+    width: 3px
 }
 ```
 
@@ -35,19 +35,19 @@ Therefore dollar variable cannot be used as a loop range parameter.
 
 ```css
 @for $i from 1 to 5 by 2 {
-    .b-$i { width: $i px; }
+    .b-$i { width: $(i)px; }
 }
 ```
 
 ```css
 .b-1 {
-    width: 1 px
+    width: 1px
 }
 .b-3 {
-    width: 3 px
+    width: 3px
 }
 .b-5 {
-    width: 5 px
+    width: 5px
 }
 ```
 
