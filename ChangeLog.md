@@ -1,3 +1,6 @@
+## 1.0.1
+* Update examples and tests to contain valid CSS
+
 ## 1.0.0
 * Update according to the plugin guidelines
 * Bump to major release, since in 0.2.0 breaking changes were introduced and alas were not bumped.
