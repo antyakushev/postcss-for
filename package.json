@@ -1,6 +1,6 @@
 {
   "name": "postcss-for",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "PostCSS plugin that enables SASS-like for loop syntax in your CSS",
   "keywords": [
     "postcss",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "postcss": "^4.1.0",
-    "postcss-simple-vars": "^0.2.4"
+    "postcss-simple-vars": "^0.3.0"
   },
   "devDependencies": {
     "gulp-eslint": "0.11.1",

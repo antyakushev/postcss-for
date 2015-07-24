@@ -1,3 +1,6 @@
+## 1.1.0
+* Added support for nested loops
+
 ## 1.0.1
 * Update examples and tests to contain valid CSS
 

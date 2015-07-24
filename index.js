@@ -3,9 +3,13 @@ var list    = require('postcss/lib/list');
 var vars    = require('postcss-simple-vars');
 
 module.exports = postcss.plugin('postcss-for', function (opts) {
-    opts = opts || {};
 
-    var checkNumber = function (rule) {
+    opts = opts || {};
+    opts.nested = opts.nested || true;
+
+    var checkNumber, checkParams, processLoops, unrollLoop;
+
+    checkNumber = function (rule) {
         return function (param) {
             if (isNaN(parseInt(param)) || !param.match(/^\d+\.?\d*$/)) {
 
@@ -18,7 +22,7 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
         };
     };
 
-    var checkParams = function (rule, params) {
+    checkParams = function (rule, params) {
 
         if (!params[0].match(/(^|[^\w])\$([\w\d-_]+)/) ||
              params[1] !== 'from' ||
@@ -30,7 +34,7 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
         [params[2], params[4], params[6] || '0'].forEach(checkNumber(rule));
     };
 
-    var unrollLoop = function (rule) {
+    unrollLoop = function (rule) {
         var params = list.space(rule.params);
 
         checkParams(rule, params);
@@ -44,6 +48,7 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
         var value = {};
         for ( var i = index; i * dir <= top * dir; i = i + by ) {
             var content = rule.clone();
+            if (opts.nested) processLoops(content);
             value[iterator] = i;
             vars({ only: value })(content);
             rule.parent.insertBefore(rule, content.nodes);
@@ -51,11 +56,15 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
         if ( rule.parent ) rule.removeSelf();
     };
 
-    return function (css) {
+    processLoops = function (css) {
         css.eachAtRule(function (rule) {
             if ( rule.name === 'for' ) {
                 unrollLoop(rule);
             }
         });
+    };
+
+    return function (css) {
+        processLoops(css);
     };
 });
