@@ -57,7 +57,7 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
     };
 
     processLoops = function (css) {
-        css.eachAtRule(function (rule) {
+        css.walkAtRules(function (rule) {
             if ( rule.name === 'for' ) {
                 unrollLoop(rule);
             }

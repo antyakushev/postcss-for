@@ -1,3 +1,7 @@
+## 2.0.0
+* Update dependencies
+* Bump major version
+
 ## 1.1.0
 * Added support for nested loops
 

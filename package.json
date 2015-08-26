@@ -1,6 +1,6 @@
 {
   "name": "postcss-for",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "PostCSS plugin that enables SASS-like for loop syntax in your CSS",
   "keywords": [
     "postcss",
@@ -20,14 +20,14 @@
     "url": "https://github.com/antyakushev/postcss-for.git"
   },
   "dependencies": {
-    "postcss": "^4.1.0",
-    "postcss-simple-vars": "^0.3.0"
+    "postcss": "^5.0.0",
+    "postcss-simple-vars": "^1.0.0"
   },
   "devDependencies": {
     "gulp-eslint": "0.11.1",
-    "gulp-mocha": "2.0.1",
-    "chai": "2.3.0",
-    "gulp": "3.8.11"
+    "gulp-mocha": "2.1.3",
+    "chai": "3.2.0",
+    "gulp": "3.9.0"
   },
   "scripts": {
     "test": "gulp"
