@@ -53,7 +53,7 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
             vars({ only: value })(content);
             rule.parent.insertBefore(rule, content.nodes);
         }
-        if ( rule.parent ) rule.removeSelf();
+        if ( rule.parent ) rule.remove();
     };
 
     processLoops = function (css) {
