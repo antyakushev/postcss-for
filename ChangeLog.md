@@ -1,3 +1,6 @@
+## 2.0.1
+* Removed deprecation warning
+
 ## 2.0.0
 * Update dependencies
 * Bump major version
