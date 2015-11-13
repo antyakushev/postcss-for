@@ -30,7 +30,7 @@ Note, that unlike the Sass `@for`, postcss-for in the example below iterates fro
 
 This plugin must be set before [postcss-nested] and [postcss-simple-vars]. 
 Therefore dollar variable cannot be used as a loop range parameter.
-If you do want to use predefined range parameters though, consider using [postcss-custom-properties] with [postcss-for-variables], or look into this [postcss-for fork](https://github.com/xori/postcss-for).
+If you do want to use predefined range parameters though, consider using [postcss-custom-properties] with [postcss-at-rules-variables], or look into this [postcss-for fork](https://github.com/xori/postcss-for).
 
 `By` keyword is available:
 
@@ -60,7 +60,7 @@ See [PostCSS] docs for examples for your environment.
 [postcss-nested]:            https://github.com/postcss/postcss-nested
 [postcss-simple-vars]:       https://github.com/postcss/postcss-simple-vars
 [postcss-custom-properties]: https://github.com/postcss/postcss-custom-properties
-[postcss-for-variables]:     https://github.com/GitScrum/postcss-for-variables
+[postcss-at-rules-variables]:https://github.com/GitScrum/postcss-at-rules-variables
 [ci]:                        https://travis-ci.org/antyakushev/postcss-for
 [deps]:                      https://gemnasium.com/antyakushev/postcss-for
 [npm]:                       http://badge.fury.io/js/postcss-for
