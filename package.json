@@ -1,6 +1,6 @@
 {
   "name": "postcss-for",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "PostCSS plugin that enables SASS-like for loop syntax in your CSS",
   "keywords": [
     "postcss",
