@@ -11,7 +11,7 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
 
     checkNumber = function (rule) {
         return function (param) {
-            if (isNaN(parseInt(param)) || !param.match(/^\d+\.?\d*$/)) {
+            if (isNaN(parseInt(param)) || !param.match(/^-?\d+\.?\d*$/)) {
 
                 if (param.indexOf('$') !== -1) {
                     throw rule.error('Variable cannot be used as a range parameter', { plugin: 'postcss-for' });

@@ -29,6 +29,12 @@ describe('postcss-for', function () {
              '.b-1-1 {}\n.b-1-2 {}\n.b-2-1 {}\n.b-2-2 {}');
     });
 
+    it('it supports ranges with negative numbers', function () {
+        test('@for $i from -1 to 0 { .b-$i { width: $(i)px; } }',
+             '.b--1 {\n    width: -1px\n}\n.b-0 {\n    width: 0px\n}');
+    });
+
+
     it('it throws an error on wrong syntax', function () {
         expect(function () {
             test('@for $i since 1 until 3 { .b-$i { width: $(i)px; } }');
