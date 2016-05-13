@@ -1,16 +1,22 @@
 # PostCSS For Plugin
-[![Build Status](https://travis-ci.org/antyakushev/postcss-for.svg)][ci] [![NPM version](https://badge.fury.io/js/postcss-for.svg)][npm] [![Dependency Status](https://gemnasium.com/antyakushev/postcss-default-unit.svg)][deps]
+[![Build Status](https://travis-ci.org/antyakushev/postcss-for.svg)][ci] 
+[![NPM version](https://badge.fury.io/js/postcss-for.svg)][npm] 
+[![Dependency Status](https://gemnasium.com/antyakushev/postcss-default-unit.svg)][deps]
+[![NPM Downloads](https://img.shields.io/npm/dm/postcss-for.svg)](https://www.npmjs.org/package/postcss-for)
+[
+    <img align="right" width="135" height="95" src="http://postcss.github.io/postcss/logo-leftp.png" title="Philosopher’s stone, logo of PostCSS">
+][PostCSS]
 
 [PostCSS] plugin that enables `@for` loop syntax in your CSS.
 
 ## Try it out!
 
-You can use postcss-for directly from [codepen]. 
-Just add [PostCSS] to the pen and add it with `@use postcss-for` syntax, or pick desired [PostCSS] plugins from the list.
+You can try postcss-for directly from [codepen]. 
+Just choose [PostCSS] as a preprocessor and pick desired plugin from the list.
 
 [
     ![lalala](https://raw.githubusercontent.com/antyakushev/postcss-for/9a8663762bdb65f94a054926e2eba3b0d8f89c68/resources/codepen.png)
-](http://codepen.io/antyakushev/pen/oxOBEO)
+][codepen]
 
 ## Usage
 
@@ -40,6 +46,8 @@ Note, that unlike the Sass `@for`, postcss-for in the example below iterates fro
 This plugin must be set before [postcss-nested] and [postcss-simple-vars]. 
 Therefore dollar variable cannot be used as a loop range parameter.
 If you do want to use predefined range parameters though, consider using [postcss-custom-properties] with [postcss-at-rules-variables], or look into this [postcss-for fork](https://github.com/xori/postcss-for).
+
+## More features
 
 `By` keyword is available:
 
