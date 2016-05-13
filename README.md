@@ -8,6 +8,10 @@
 You can use postcss-for directly from [codepen]. 
 Just add [PostCSS] to the pen and add it with `@use postcss-for` syntax, or pick desired [PostCSS] plugins from the list.
 
+[
+    ![lalala](https://raw.githubusercontent.com/antyakushev/postcss-for/9a8663762bdb65f94a054926e2eba3b0d8f89c68/resources/codepen.png)
+](http://codepen.io/antyakushev/pen/oxOBEO)
+
 ## Usage
 
 ```js
