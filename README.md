@@ -3,6 +3,11 @@
 
 [PostCSS] plugin that enables `@for` loop syntax in your CSS.
 
+## Try it out!
+
+You can use postcss-for directly from [codepen]. 
+Just add [PostCSS] to the pen and add it with `@use postcss-for` syntax, or pick desired [PostCSS] plugins from the list.
+
 ## Usage
 
 ```js
@@ -64,3 +69,4 @@ See [PostCSS] docs for examples for your environment.
 [ci]:                        https://travis-ci.org/antyakushev/postcss-for
 [deps]:                      https://gemnasium.com/antyakushev/postcss-for
 [npm]:                       http://badge.fury.io/js/postcss-for
+[codepen]:                   http://codepen.io/antyakushev/pen/oxOBEO
