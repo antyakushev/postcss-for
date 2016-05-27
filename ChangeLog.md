@@ -1,3 +1,6 @@
+## 2.0.3
+* Bump simple-vars to major 2.0.0
+
 ## 2.0.2
 * Added support for negative values
 
