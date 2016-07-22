@@ -1,35 +1,31 @@
 var postcss = require('postcss');
 var list    = require('postcss/lib/list');
 var vars    = require('postcss-simple-vars');
-/*DEBUG*/ var appendout = require('fs').appendFileSync;
 
 module.exports = postcss.plugin('postcss-for', function (opts) {
 
     opts = opts || {};
     opts.nested = opts.nested || true;
 
-    var parentsHaveIterator, manageIterStack, checkNumber, checkParams, processLoops, unrollLoop;
+    var parentsHaveIterator, manageIterStack, checkNumber, checkParams, processLoops, processOriginalLoops, unrollLoop;
     var iterStack = [];
 
     parentsHaveIterator = function (rule, param) {
         if(rule.parent == null) { return false; }
-        /*DEBUG*/ appendout('./test/debugout.txt', 'HOLY ROOT:\n' + rule.root() + '\n');
         if(rule.parent.type === 'root') { return false; }
         if(rule.parent.params == null) { return false; }
 
         var parentIterVar = list.space(rule.parent.params);
-        /*DEBUG*/ appendout('./test/debugout.txt', 'parentIterVar[0] content:' + parentIterVar[0] + ' and parentparams: ' + rule.parent.params +'\n');
 
         if (parentIterVar[0] == null) { return false; }
         if (parentIterVar[0] === param) { return true; }
         if ( iterStack.indexOf(param) !== -1) { return true; }
         return parentsHaveIterator(rule.parent, param);
-    }
+    };
 
     manageIterStack = function (rule) {
         if (rule.parent.type !== 'root') {
             var parentIterVar = list.space(rule.parent.params)[0];
-            /*DEBUG*/ appendout('./test/debugout.txt', 'manageIterStack w/parent iter ' + parentIterVar + ', stack:' + iterStack + '\n');
             if (iterStack.indexOf(parentIterVar) === -1) {
                 // If parent isn't in stack, wipe stack
                 iterStack.splice(0, iterStack.length);
@@ -40,21 +36,16 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
         } else {
             // If parent (root) isn't in stack, wipe stack
             iterStack.splice(0, iterStack.length);
-            /*DEBUG*/ appendout('./test/debugout.txt', 'STACK WIPED :: Operated with root-failout clause\n');
         }
-        /*DEBUG*/ appendout('./test/debugout.txt', 'manageIterStack after cuts:' + iterStack + '\n');
         // Push current rule on stack regardless
         iterStack.push( list.space(rule.params)[0] );
-        /*DEBUG*/ appendout('./test/debugout.txt', 'manageIterStack after adds:' + iterStack + '\n');
-    }
+    };
 
     checkNumber = function (rule) {
         return function (param) {
             if (isNaN(parseInt(param)) || !param.match(/^-?\d+\.?\d*$/)) {
-                /*DEBUG*/ appendout('./test/debugout.txt', 'Param content:' + param + '\n');
                 if (param.indexOf('$') !== -1) {
                     if( !parentsHaveIterator(rule, param) ) {
-                        /*DEBUG*/ appendout('./test/debugout.txt', '\n---MISMATCH--- WOULD THROW ERROR! stack:' + iterStack + '\n');
                         throw rule.error('External variable (not from a parent for loop) cannot be used as a range parameter', { plugin: 'postcss-for' });
                     }
                 } else {
@@ -81,13 +72,6 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
 
         checkParams(rule, params);
 
-        // if (typeof iterStack !== 'undefined') {
-        //     iterStack.push(params[0]);
-        // } else {
-        //     iterStack = Array(params[0]);
-        // }
-        // /*DEBUG*/ appendout('./test/debugout.txt', 'stack:' + iterStack + '\n');
-
         var iterator = params[0].slice(1),
             index =   +params[2],
             top =     +params[4],
@@ -103,13 +87,11 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
             rule.parent.insertBefore(rule, content.nodes);
         }
         if ( rule.parent ) rule.remove();
-        // iterStack.pop();
     };
 
     processLoops = function (css) {
         css.walkAtRules(function (rule) {
             if ( rule.name === 'for' ) {
-                /*DEBUG*/ appendout('./test/debugout.txt', 'Unrolling ' + rule.params + ' with stack:' + iterStack + '\n');
                 unrollLoop(rule);
             }
         });
@@ -121,7 +103,6 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
                 if (rule.parent) {
                     manageIterStack(rule);
                 }
-                /*DEBUG*/ appendout('./test/debugout.txt', 'Unrolling @Root ' + rule.params + ' with stack:' + iterStack + '\n');
                 unrollLoop(rule);
             }
         });

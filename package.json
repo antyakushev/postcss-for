@@ -30,7 +30,6 @@
     "gulp-mocha": "2.1.3"
   },
   "scripts": {
-    "devtest": "node test/devtest.js & rm -f test/debugout.txt",
     "test": "gulp"
   }
 }
