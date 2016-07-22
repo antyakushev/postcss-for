@@ -69,6 +69,32 @@ If you do want to use predefined range parameters though, consider using [postcs
 }
 ```
 
+Locality of variables in nested loops is supported:
+```css
+@for $x from 1 to 2 { 
+    @for $y from 1 to $x { 
+        @for $z from $y to $x { 
+            .c-$(x)-$(z)-$(y) { padding: $(x)em $(z)em $(y)em; } 
+        }
+    }
+}
+```
+
+```css
+.c-1-1-1 {
+    padding: 1em 1em 1em
+}
+.c-2-1-1 {
+    padding: 2em 1em 1em
+}
+.c-2-2-1 {
+    padding: 2em 2em 1em
+}
+.c-2-2-2 {
+    padding: 2em 2em 2em
+}
+```
+
 
 
 See [PostCSS] docs for examples for your environment.
