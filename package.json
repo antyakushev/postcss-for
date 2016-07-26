@@ -1,6 +1,6 @@
 {
   "name": "postcss-for",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "PostCSS plugin that enables SASS-like for loop syntax in your CSS",
   "keywords": [
     "postcss",
@@ -11,7 +11,8 @@
     "sass",
     "from",
     "to",
-    "iterate"
+    "iterate",
+    "nested"
   ],
   "author": "Anton Yakushev <yakushevanton@gmail.com>",
   "license": "MIT",

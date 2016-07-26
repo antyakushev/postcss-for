@@ -1,3 +1,9 @@
+## 2.1.0 by Travis Palmer
+* Added support for nesting `@for` loops while using variables in the range that are iterators of parent `@for` loops
+* Added tests for added functionality
+* Migrated and changed the wording on `variables not allowed in range` error to be only for non-local `@for` loop variables
+* Added example to README of nested loops
+
 ## 2.0.3
 * Bump simple-vars to major 2.0.0
 
