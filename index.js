@@ -25,7 +25,8 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
 
     manageIterStack = function (rule) {
         if (rule.parent.type !== 'root') {
-            var parentIterVar = list.space(rule.parent.params)[0];
+            console.log('\n\nRule:\n', rule, '\n\nList:\n', list, '\n\nParent:\n', rule.parent)
+            var parentIterVar = rule.parent.params && list.space(rule.parent.params)[0];
             if (iterStack.indexOf(parentIterVar) === -1) {
                 // If parent isn't in stack, wipe stack
                 iterStack.splice(0, iterStack.length);

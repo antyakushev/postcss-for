@@ -2,9 +2,10 @@ var postcss = require('postcss');
 var expect  = require('chai').expect;
 
 var plugin = require('../');
+var postcssCustomProps = require('postcss-custom-properties');
 
 var test = function (input, output, opts) {
-    expect(postcss([plugin(opts)]).process(input).css).to.eql(output);
+    expect(postcss([plugin(opts), postcssCustomProps]).process(input).css).to.eql(output);
 };
 
 describe('postcss-for', function () {
@@ -77,6 +78,11 @@ describe('postcss-for', function () {
         expect(function () {
             test('@for $w from 1 to 3 { @for $x from 1 to $w { @for $a from $x to $w { @for $b from $a to $w { .c-$(w)-$(b)-$(a)-$(x) {} }}}}\n@for $a from 1 to 3 { @for $b from $a to $w { .D-$(w)-$(b)-$(a)-$(x) {} }}');
         }).to.throw('<css input>:2:23: External variable (not from a parent for loop) cannot be used as a range parameter');
+    });
+
+    it('it supports :root selector', function () {
+      test(':root { \n@for $weight from 100 to 900 by 100 \n{ --foo-$(weight): $weight; }\n}\n.b { font-weight: var(--foo-200) }',
+           '.b { font-weight: 200 }');
     });
 
 });

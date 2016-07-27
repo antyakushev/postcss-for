@@ -1,3 +1,6 @@
+## 2.1.1
+* Fixed `:root` selector support
+
 ## 2.1.0 by Travis Palmer
 * Added support for nesting `@for` loops while using variables in the range that are iterators of parent `@for` loops
 * Added tests for added functionality
