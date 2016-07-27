@@ -50,6 +50,11 @@ describe('postcss-for', function () {
              '.b--1 {\n    width: -1px\n}\n.b-0 {\n    width: 0px\n}');
     });
 
+    it('it supports :root selector', function () {
+        test(':root { \n@for $weight from 100 to 900 by 100 \n{ --foo-$(weight): $weight; }\n}\n.b { font-weight: var(--foo-200) }',
+           '.b { font-weight: 200 }');
+    });
+
     it('it throws an error on wrong syntax', function () {
         expect(function () {
             test('@for $i since 1 until 3 { .b-$i { width: $(i)px; } }');
@@ -78,11 +83,6 @@ describe('postcss-for', function () {
         expect(function () {
             test('@for $w from 1 to 3 { @for $x from 1 to $w { @for $a from $x to $w { @for $b from $a to $w { .c-$(w)-$(b)-$(a)-$(x) {} }}}}\n@for $a from 1 to 3 { @for $b from $a to $w { .D-$(w)-$(b)-$(a)-$(x) {} }}');
         }).to.throw('<css input>:2:23: External variable (not from a parent for loop) cannot be used as a range parameter');
-    });
-
-    it('it supports :root selector', function () {
-      test(':root { \n@for $weight from 100 to 900 by 100 \n{ --foo-$(weight): $weight; }\n}\n.b { font-weight: var(--foo-200) }',
-           '.b { font-weight: 200 }');
     });
 
 });
