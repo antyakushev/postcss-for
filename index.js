@@ -7,7 +7,7 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
     opts = opts || {};
     opts.nested = opts.nested || true;
 
-    var parentsHaveIterator, manageIterStack, checkNumber, checkParams, processLoops, processOriginalLoops, unrollLoop;
+    var parentsHaveIterator, manageIterStack, checkNumber, isForFromTo, isForIn, insertRuleIteration, processLoops, processOriginalLoops, unrollLoop;
     var iterStack = [];
 
     parentsHaveIterator = function (rule, param) {
@@ -55,38 +55,62 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
         };
     };
 
-    checkParams = function (rule, params) {
-
+    isForFromTo = function (params) {
         if (!params[0].match(/(^|[^\w])\$([\w\d-_]+)/) ||
              params[1] !== 'from' ||
              params[3] !== 'to' ||
              params[5] !== 'by' ^ params[5] === undefined ) {
-            throw rule.error('Wrong loop syntax', { plugin: 'postcss-for' });
+            return false;
         }
+        return true;
+    };
 
-        [params[2], params[4], params[6] || '0'].forEach(checkNumber(rule));
+    isForIn = function (params) {
+        if (!params[0].match(/(^|[^\w])\$([\w\d-_]+)/) ||
+            params[1] !== 'in' ||
+            params[2] === undefined ) {
+            return false;
+        }
+        return true;
+    };
+
+    insertRuleIteration = function(rule, iteratorName, iteratorValue) {
+        var content = rule.clone(),
+            value = {};
+        value[iteratorName] = iteratorValue;
+        vars({only: value})(content);
+        if (opts.nested) processLoops(content);
+        rule.parent.insertBefore(rule, content.nodes);
     };
 
     unrollLoop = function (rule) {
-        var params = list.space(rule.params);
+        var params = list.space(rule.params),
+            iteratorName;
 
-        checkParams(rule, params);
+        if (isForFromTo(params)) {
+            [params[2], params[4], params[6] || '0'].forEach(checkNumber(rule));
 
-        var iterator = params[0].slice(1),
-            index =   +params[2],
-            top =     +params[4],
-            dir =      top < index ? -1 : 1,
-            by =      (params[6] || 1) * dir;
+            iteratorName = params[0].slice(1);
+            var index = +params[2],
+                top = +params[4],
+                dir = top < index ? -1 : 1,
+                by = (params[6] || 1) * dir;
 
-        var value = {};
-        for ( var i = index; i * dir <= top * dir; i = i + by ) {
-            var content = rule.clone();
-            value[iterator] = i;
-            vars({ only: value })(content);
-            if (opts.nested) processLoops(content);
-            rule.parent.insertBefore(rule, content.nodes);
+            for (var i = index; i * dir <= top * dir; i = i + by) {
+                insertRuleIteration(rule, iteratorName, i);
+            }
+            if (rule.parent) rule.remove();
+        } else if (isForIn(params)) {
+            iteratorName = params[0].slice(1);
+            var listValues = list.comma(params.slice(2).join(' '));
+
+            listValues.forEach(function(value) {
+                insertRuleIteration(rule, iteratorName, value);
+            });
+            if (rule.parent) rule.remove();
+        } else {
+            throw rule.error('Wrong loop syntax', { plugin: 'postcss-for' });
         }
-        if ( rule.parent ) rule.remove();
     };
 
     processLoops = function (css) {

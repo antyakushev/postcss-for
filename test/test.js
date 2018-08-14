@@ -25,7 +25,7 @@ describe('postcss-for', function () {
              '.b-1 {\n    width: 1px\n}\n.b-3 {\n    width: 3px\n}');
     });
 
-    it('it supports nested loops', function () {
+    it('it supports nested for...from...to loops', function () {
         test('@for $i from 1 to 2 { @for $j from 1 to 2 {.b-$(i)-$(j) {} } }',
              '.b-1-1 {}\n.b-1-2 {}\n.b-2-1 {}\n.b-2-2 {}');
     });
@@ -50,6 +50,26 @@ describe('postcss-for', function () {
              '.b--1 {\n    width: -1px\n}\n.b-0 {\n    width: 0px\n}');
     });
 
+    it('it iterates in', function () {
+        test('@for $dir in left, right, none { .b-$dir { float: $dir; } }',
+            '.b-left {\n    float: left\n}\n.b-right {\n    float: right\n}\n.b-none {\n    float: none\n}');
+    });
+
+    it('it supports quoted values in for...in loops', function () {
+        test('@for $name in "Jane Doe", "Chris O\'Connor", \'12" pipe\' { input[value=$(name)]::after { content: "Ok."; } }',
+            'input[value="Jane Doe"]::after {\n    content: "Ok."\n}\ninput[value="Chris O\'Connor"]::after {\n    content: "Ok."\n}\ninput[value=\'12" pipe\']::after {\n    content: "Ok."\n}');
+    });
+
+    it('it supports nested for...in loops', function () {
+        test('@for $fibonacci in 3, 5, 8 { @for $dir in left, right { .b-$(fibonacci)-$(dir) { margin-$(dir): $(fibonacci)rem; float: $dir; } } }',
+            '.b-3-left {\n    margin-left: 3rem;\n    float: left\n}\n.b-3-right {\n    margin-right: 3rem;\n    float: right\n}\n.b-5-left {\n    margin-left: 5rem;\n    float: left\n}\n.b-5-right {\n    margin-right: 5rem;\n    float: right\n}\n.b-8-left {\n    margin-left: 8rem;\n    float: left\n}\n.b-8-right {\n    margin-right: 8rem;\n    float: right\n}');
+    });
+
+    it('it supports ranges with a variable from the parent for...in loop', function () {
+        test('@for $j in 3, 7 { @for $i from 3 to $j {.b-$(i)-$(j) {} } }',
+            '.b-3-3 {}\n.b-3-7 {}\n.b-4-7 {}\n.b-5-7 {}\n.b-6-7 {}\n.b-7-7 {}');
+    });
+
     it('it supports :root selector', function () {
         test(':root { \n@for $weight from 100 to 900 by 100 \n{ --foo-$(weight): $weight; }\n}\n.b { font-weight: var(--foo-200) }',
            '.b { font-weight: 200 }');
@@ -58,6 +78,12 @@ describe('postcss-for', function () {
     it('it throws an error on wrong syntax', function () {
         expect(function () {
             test('@for $i since 1 until 3 { .b-$i { width: $(i)px; } }');
+        }).to.throw('<css input>:1:1: Wrong loop syntax');
+    });
+
+    it('it throws an error on missing in parameter', function () {
+        expect(function () {
+            test('@for $dir in { .b-$dir { float: $dir; } }');
         }).to.throw('<css input>:1:1: Wrong loop syntax');
     });
 
