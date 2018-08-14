@@ -60,7 +60,8 @@ module.exports = postcss.plugin('postcss-for', function (opts) {
         if (!params[0].match(/(^|[^\w])\$([\w\d-_]+)/) ||
              params[1] !== 'from' ||
              params[3] !== 'to' ||
-             params[5] !== 'by' ^ params[5] === undefined ) {
+             params[5] !== 'by' && params[5] !== undefined ||
+             params[5] === 'by' && params[6] === undefined ) {
             throw rule.error('Wrong loop syntax', { plugin: 'postcss-for' });
         }
 
