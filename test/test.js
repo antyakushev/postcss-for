@@ -61,6 +61,12 @@ describe('postcss-for', function () {
         }).to.throw('<css input>:1:1: Wrong loop syntax');
     });
 
+    it('it throws an error on missing by parameter', function () {
+        expect(function () {
+            test('@for $i from 1 to 3 by { .b-$i { width: $(i)px; } }');
+        }).to.throw('<css input>:1:1: Wrong loop syntax');
+    });
+
     it('it throws an error on wrong range parameters', function () {
         expect(function () {
             test('@for $i from a to c { .b-$i { width: $(i)px; } }');
